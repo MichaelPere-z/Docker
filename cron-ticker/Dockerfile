@@ -2,16 +2,14 @@ FROM node:19.2-alpine3.16
 
 WORKDIR /app
 
-COPY package.json ./
+COPY . .
 
 RUN npm install
 
-COPY app.js ./
-
-COPY tasks ./tasks
-
-COPY tests ./tests
-
 RUN npm run test
+
+RUN rm -rf tests && rm -rf node_modules
+
+RUN npm install --prod
 
 CMD [ "node", "app.js" ]
